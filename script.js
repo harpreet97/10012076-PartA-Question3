@@ -1,7 +1,15 @@
 
-var Firstname;
-var Lastname;
-var Salary;
+let viewEmployeeResult = document.querySelector("#viewEmployees");
+let btnDetail = document.getElementById("btnDetails");
+var emplArray = [];
+var result="Details: <br />";
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    alert("Welcome");
+    InputAllEmployees();
+
+});
 
 class Person {
     get Firstname() {
@@ -38,40 +46,43 @@ class Person {
 
     SayHello() {
         var myData = `The name of employee is ${this._Firstname} ${this._Lastname} and his annual salary is ${this._Salary}.`;
-        $("#viewEmployees").append(myData + "</br>");
+        result += myData + "<br/>";
     }
 }
-alert("Welcome")
-// An array is used for collecting the information of Employees.
-var emplArray = [];
-var count = 1;
-for (var employee = 0; employee <= 2; employee++) {
 
-    Firstname = prompt("What is the firstname of " + count + " employee?")
-    Lastname = prompt("What is the lastname of " + count + " employee?")
-    Salary = prompt("What is the annual salary of " + count + " employee?")
 
-    var employeeObject = new Person(Firstname, Lastname, Salary);
+function InputAllEmployees() {
+    // An array is used for collecting the information of Employees.
 
-    emplArray[employee] = employeeObject;
-    count++;
+    var count = 1;
+    for (var employee = 0; employee <= 2; employee++) {
+
+        // Asking the user to enter thier data.
+        Firstname = prompt("What is the firstname of " + count + " employee?")
+        Lastname = prompt("What is the lastname of " + count + " employee?")
+        Salary = prompt("What is the annual salary of " + count + " employee?")
+
+        var employeeObject = new Person(Firstname, Lastname, Salary);
+
+        emplArray[employee] = employeeObject;
+        count++;
+    }
 }
 
-// This function to used to run control events.
-$(document).ready(function () {
-    $("#btnDetails").click(function () {
+btnDetail.addEventListener("click", function () {
 
-        alert("Information of all the employees");
-        count = 1;
-        for (var data = 0; data < emplArray.length; data++) {
-            $("#viewEmployees").append("Detail of " + count + " employee - </br>");
-            var getData = emplArray[data];
-            var personObj = new Person(getData._Firstname, getData._Lastname, getData._Salary);
-            personObj.SayHello();
-            count++;
-        }
-    });
+    alert("Information of all the employees");
+    var count = 1;
+    for (var data = 0; data < emplArray.length; data++) {
+        result += "Detail of " + count + " employee - ";
+        var getData = emplArray[data];
+        var personObj = new Person(getData._Firstname, getData._Lastname, getData._Salary);
+        personObj.SayHello();
+        count++;
+    }
+    viewEmployeeResult.innerHTML = result;
 });
+
 
 
 
